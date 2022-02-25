@@ -2,6 +2,7 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const path = require('path');
 const { resourceLimits } = require('worker_threads');
+const authRoutes = require('./routes/authRoutes');
 const port = 8080;
 
 const app= express();
@@ -24,14 +25,17 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res)=>{
     res.render('home');
 })
-
-app.get('/login', (req, res)=>{
-    res.sendFile('./views/login.html', { root: __dirname })
+app.get('/smoothies', (req, res) => {
+    res.render('smoothies')
+});
+// app.get('/login', (req, res)=>{
+//     res.sendFile('./views/login.html', { root: __dirname })
     
-})
+// })
 
-app.get('/register', (req, res) => {
-    //res.sendFile(path.join(__dirname, 'register.html'))
-    res.sendFile('./views/register.html', { root: __dirname })
-})
+// app.get('/register', (req, res) => {
+//     //res.sendFile(path.join(__dirname, 'register.html'))
+//     res.sendFile('./views/register.html', { root: __dirname })
+// }) 
 
+app.use(authRoutes);
