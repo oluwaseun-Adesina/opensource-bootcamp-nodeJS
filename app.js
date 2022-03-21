@@ -3,12 +3,14 @@ const { default: mongoose } = require('mongoose');
 const path = require('path');
 const { resourceLimits } = require('worker_threads');
 const authRoutes = require('./routes/authRoutes');
-const port = 8080;
+
+require('dotenv').config();
 
 const app= express();
-
+ 
+var port = process.env.PORT ||8080
 //database 
-const dbURI = 'mongodb+srv://admin:12345abcde@userauth.e2sai.mongodb.net/user?retryWrites=true&w=majority';
+const dbURI = process.env.dbURI;
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => app.listen(port, ()=>{
         console.log('Server Listening on localhost:' + port)
